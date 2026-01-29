@@ -8,9 +8,9 @@
   "packageManager": "pnpm@10.0.0",
   "pnpm": {
     "onlyBuiltDependencies": [],
-    "overrides": {
-      "@mariozechner/clipboard": "0.0.0"
-    }
+    "neverBuiltDependencies": [
+      "@mariozechner/clipboard-linux-x64-gnu"
+    ]
   },
   "scripts": {
     "heroku-prebuild": "corepack enable",
