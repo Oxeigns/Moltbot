@@ -13,7 +13,7 @@
   },
   "scripts": {
     "heroku-prebuild": "corepack enable",
-    "heroku-postbuild": "pnpm add clawdbot@latest --ignore-scripts --no-optional",
+    "heroku-postbuild": "pnpm add clawdbot@latest --no-optional",
     "postinstall": "node scripts/disable-clipboard.js",
     "start": "bash start.sh"
   }
