@@ -37,6 +37,8 @@ echo "Starting Moltbot Telegram Gateway (long polling)"
 echo "Workspace: /tmp"
 echo "Config: /tmp/moltbot.json"
 
+export NODE_ENV=production
+
 ./node_modules/.bin/clawdbot gateway run \
   --config /tmp/moltbot.json \
   --allow-unconfigured \
