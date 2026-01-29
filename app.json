@@ -1,6 +1,6 @@
 {
   "name": "moltbot-heroku-wrapper",
-  "description": "Heroku worker-only wrapper for Clawdbot using pnpm dlx.",
+  "description": "Heroku worker-only wrapper for Clawdbot with build-time installs.",
   "keywords": [
     "clawdbot",
     "moltbot",
@@ -20,15 +20,19 @@
     "MODEL": {
       "description": "OpenAI model to use.",
       "required": false
-    },
-    "LOG_LEVEL": {
-      "description": "Logging level passed to the gateway (info, debug, warn, error).",
-      "required": false
     }
   },
   "formation": {
     "worker": {
       "quantity": 1
     }
-  }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku-community/apt"
+    }
+  ]
 }
