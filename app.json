@@ -1,6 +1,6 @@
 {
   "name": "moltbot-heroku-wrapper",
-  "description": "Heroku worker-only wrapper for Moltbot using global CLI install.",
+  "description": "Heroku worker-only wrapper for Moltbot built from source.",
   "keywords": [
     "moltbot",
     "telegram",
@@ -18,8 +18,7 @@
     },
     "MODEL": {
       "description": "OpenAI model to use.",
-      "required": false,
-      "value": "gpt-4o-mini"
+      "required": false
     },
     "GROUP_REQUIRE_MENTION": {
       "description": "Require @mention in groups before Moltbot responds.",
@@ -28,8 +27,12 @@
     },
     "LOG_LEVEL": {
       "description": "Logging level passed to Moltbot (info, debug, warn, error).",
-      "required": false,
-      "value": "info"
+      "required": false
+    }
+  },
+  "formation": {
+    "worker": {
+      "quantity": 1
     }
   }
 }
