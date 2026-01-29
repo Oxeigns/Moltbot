@@ -9,6 +9,6 @@
     "start": "bash start.sh"
   },
   "dependencies": {
-    "moltbot": "github:moltbot/clawdbot"
+    "moltbot": "2026.1.27-beta.1"
   }
 }
