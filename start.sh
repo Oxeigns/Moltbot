@@ -32,33 +32,68 @@ JSON
 
 mkdir -p /tmp/moltbot-workspace
 
-resolve_molt_cmd() {
-  if command -v moltbot >/dev/null 2>&1; then
-    MOLT_CMD=(moltbot)
-    return 0
-  fi
-
-  if [[ -x "./node_modules/.bin/moltbot" ]]; then
-    MOLT_CMD=(./node_modules/.bin/moltbot)
-    return 0
-  fi
-
-  if [[ -f "./node_modules/moltbot/moltbot.mjs" ]]; then
-    MOLT_CMD=(node ./node_modules/moltbot/moltbot.mjs)
-    return 0
-  fi
-
-  return 1
-}
-
-if ! resolve_molt_cmd; then
-  echo "moltbot executable not found. Installing dependencies..." >&2
-  npm install --omit=dev
-  resolve_molt_cmd || {
-    echo "moltbot executable still missing after install." >&2
-    exit 1
-  }
+DIST_DIR="./moltbot-src/dist"
+if [[ ! -d "${DIST_DIR}" ]]; then
+  echo "Moltbot dist directory is missing. Ensure heroku-postbuild ran successfully." >&2
+  exit 1
 fi
 
-"${MOLT_CMD[@]}" --version
-"${MOLT_CMD[@]}" gateway --config /tmp/moltbot.json --verbose
+resolve_entry() {
+  if [[ -f "${DIST_DIR}/entry.js" ]]; then
+    echo "${DIST_DIR}/entry.js"
+    return 0
+  fi
+
+  if [[ -f "${DIST_DIR}/index.js" ]]; then
+    echo "${DIST_DIR}/index.js"
+    return 0
+  fi
+
+  local pkg_json="./moltbot-src/package.json"
+  if [[ ! -f "${pkg_json}" ]]; then
+    return 1
+  fi
+
+  node -e '
+    const fs = require("fs");
+    const path = require("path");
+    const pkgPath = process.argv[1];
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
+    let target = "";
+    if (typeof pkg.main === "string") {
+      target = pkg.main;
+    } else if (pkg.exports) {
+      if (typeof pkg.exports === "string") {
+        target = pkg.exports;
+      } else if (pkg.exports["."] ) {
+        const exp = pkg.exports["."];
+        if (typeof exp === "string") {
+          target = exp;
+        } else if (exp.import) {
+          target = exp.import;
+        } else if (exp.default) {
+          target = exp.default;
+        } else if (exp.require) {
+          target = exp.require;
+        }
+      }
+    }
+    if (!target) {
+      process.exit(2);
+    }
+    console.log(path.resolve(path.dirname(pkgPath), target));
+  ' "${pkg_json}"
+}
+
+ENTRY_FILE="$(resolve_entry || true)"
+if [[ -z "${ENTRY_FILE}" || ! -f "${ENTRY_FILE}" ]]; then
+  echo "Unable to locate Moltbot entry file in dist output." >&2
+  exit 1
+fi
+
+echo "Starting Moltbot Telegram Gateway (long polling)"
+echo "Workspace: /tmp/moltbot-workspace"
+echo "Config: /tmp/moltbot.json"
+echo "Entry: ${ENTRY_FILE}"
+
+node "${ENTRY_FILE}" gateway --config /tmp/moltbot.json --verbose

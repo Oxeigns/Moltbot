@@ -5,10 +5,8 @@
   "engines": {
     "node": ">=22 <23"
   },
-  "dependencies": {
-    "moltbot": "latest"
-  },
   "scripts": {
+    "heroku-postbuild": "npm i -g pnpm@latest && git clone --depth 1 https://github.com/moltbot/moltbot.git moltbot-src && cd moltbot-src && pnpm install && pnpm build && ls -la dist",
     "start": "bash start.sh"
   }
 }
