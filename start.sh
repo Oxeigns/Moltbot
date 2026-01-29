@@ -1,33 +1,31 @@
 #!/bin/bash
-set -euo pipefail
+set -e
 
-echo "=== Starting Clawdbot Gateway ==="
+echo "=== Starting Clawdbot Gateway (Heroku Fixed) ==="
 
 : "${TELEGRAM_BOT_TOKEN:?Missing TELEGRAM_BOT_TOKEN}"
 : "${OPENAI_API_KEY:?Missing OPENAI_API_KEY}"
 MODEL="${MODEL:-gpt-4o-mini}"
 
-# ---------- Required paths (FIXES Missing config) ----------
+# ---------- Heroku paths ----------
 export HOME="/app"
 export XDG_CONFIG_HOME="/app/.config"
 
-# ---------- Env ----------
+# ---------- Memory protection ----------
 export NODE_ENV=production
 export TERM=dumb
-export NODE_OPTIONS="--max-old-space-size=256"
+export NODE_OPTIONS="--max-old-space-size=192"
 export UV_THREADPOOL_SIZE=2
 
 # ---------- Clipboard native crash patch ----------
-CLIP_PATH="node_modules/@mariozechner/clipboard/index.js"
-if [ -f "$CLIP_PATH" ]; then
-  echo "module.exports = { writeSync(){}, readSync(){ return '' } }" > "$CLIP_PATH"
-  echo "Clipboard patched"
+CLIP="node_modules/@mariozechner/clipboard/index.js"
+if [ -f "$CLIP" ]; then
+  echo "module.exports={writeSync(){},readSync(){return ''}}" > "$CLIP"
 fi
 
-# ---------- Create OFFICIAL config path ----------
+# ---------- Create official config ----------
 CFG_DIR="/app/.config/clawdbot"
 CFG_FILE="$CFG_DIR/config.json"
-
 mkdir -p "$CFG_DIR"
 
 cat > "$CFG_FILE" <<EOF
@@ -55,10 +53,7 @@ cat > "$CFG_FILE" <<EOF
 }
 EOF
 
-echo "Config ready"
+echo "Config OK"
 
-# ---------- Auto fix doctor warning ----------
-node_modules/.bin/clawdbot doctor --fix || true
-
-# ---------- Start gateway ----------
-exec node_modules/.bin/clawdbot gateway run
+# ---------- START WITHOUT DOCTOR ----------
+exec node_modules/.bin/clawdbot gateway run --allow-unconfigured
