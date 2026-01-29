@@ -21,8 +21,9 @@ if [ ! -f "$CONFIG_SOURCE" ]; then
   CONFIG_SOURCE="config.template.json"
 fi
 
-CONFIG_PATH="/tmp/moltbot.json"
+CONFIG_PATH="/tmp/clawdbot.json"
 cp "$CONFIG_SOURCE" "$CONFIG_PATH"
+export CLAWDBOT_CONFIG="$CONFIG_PATH"
 
 # ---- Start Gateway ----
 APP_ROOT="$(pwd)"
