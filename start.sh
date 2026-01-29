@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
-set -euo pipefail
-
-export NO_CLIPBOARD=1
-export CLIPBOARD_DISABLE=1
 export CLI_DISABLE_UI=1
-export DISABLE_UI=1
+export NO_CLIPBOARD=1
 export TERM=dumb
 export NODE_ENV=production
+
+set -euo pipefail
+
+export CLIPBOARD_DISABLE=1
+export DISABLE_UI=1
 
 export NODE_OPTIONS="--max-old-space-size=256"
 
