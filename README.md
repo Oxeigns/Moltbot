@@ -6,7 +6,7 @@ This repository runs the Clawdbot (Moltbot) gateway on a Heroku worker dyno usin
 
 - Node.js 24 (enforced via `engines`)
 - Worker dyno only (no web dyno)
-- Buildpacks: `heroku/nodejs`, `heroku-community/apt` (for `git`)
+- Buildpacks: `heroku-community/apt` (for `git`), `heroku/nodejs`
 
 ## Deploy
 
@@ -17,8 +17,8 @@ This repository runs the Clawdbot (Moltbot) gateway on a Heroku worker dyno usin
 2. Ensure buildpacks are set in this order:
 
 ```bash
-heroku buildpacks:set heroku/nodejs
-heroku buildpacks:add --index 2 heroku-community/apt
+heroku buildpacks:set heroku-community/apt
+heroku buildpacks:add --index 2 heroku/nodejs
 ```
 
 3. Deploy this repo to Heroku.

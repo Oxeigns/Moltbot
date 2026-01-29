@@ -29,10 +29,10 @@
   },
   "buildpacks": [
     {
-      "url": "heroku/nodejs"
+      "url": "heroku-community/apt"
     },
     {
-      "url": "heroku-community/apt"
+      "url": "heroku/nodejs"
     }
   ]
 }
