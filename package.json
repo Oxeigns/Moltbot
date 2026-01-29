@@ -6,9 +6,12 @@
     "node": "24.x"
   },
   "packageManager": "pnpm@10.0.0",
+  "pnpm": {
+    "onlyBuiltDependencies": []
+  },
   "scripts": {
     "heroku-prebuild": "corepack enable",
-    "heroku-postbuild": "pnpm add clawdbot@latest",
+    "heroku-postbuild": "pnpm add clawdbot@latest --ignore-scripts --no-optional",
     "start": "bash start.sh"
   }
 }
