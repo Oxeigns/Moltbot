@@ -6,9 +6,10 @@
     "node": "22.x"
   },
   "scripts": {
+    "postinstall": "bash scripts/build-moltbot.sh",
     "start": "bash start.sh"
   },
   "dependencies": {
-    "moltbot": "2026.1.27-beta.1"
+    "moltbot": "github:moltbot/clawdbot"
   }
 }
