@@ -1,8 +1,4 @@
 {
-  "agent": {
-    "workspace": "/tmp/moltbot-workspace",
-    "disableDangerousTools": true
-  },
   "providers": {
     "openai": {
       "apiKey": "${OPENAI_API_KEY}",
@@ -15,7 +11,9 @@
       "dmPolicy": "pairing",
       "requireMention": true
     }
+  },
+  "logLevel": "info",
+  "agent": {
+    "workspace": "/tmp/moltbot-workspace"
   }
-  // How to enable tools locally (NOT recommended on Heroku):
-  // See Moltbot docs for tool configuration options.
 }

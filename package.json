@@ -1,15 +1,12 @@
 {
   "name": "moltbot-heroku-wrapper",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22 <23"
   },
   "scripts": {
-    "postinstall": "npm install -g pnpm && pnpm install && pnpm build",
+    "heroku-postbuild": "npm i -g moltbot@latest",
     "start": "bash start.sh"
-  },
-  "dependencies": {
-    "moltbot": "github:moltbot/clawdbot"
   }
 }
