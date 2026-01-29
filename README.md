@@ -1,10 +1,10 @@
 # Moltbot on Heroku (Worker Only)
 
-This repository provides a Heroku worker wrapper that builds Moltbot from Git source with pnpm and runs the Telegram gateway via the built `dist` output.
+This repository runs the official Moltbot CLI via `pnpm dlx` on a Heroku worker dyno using Node 24.
 
 ## Requirements
 
-- Node.js >= 22
+- Node.js 24 (enforced via `engines`)
 - Worker dyno only (no web dyno)
 
 ## Deploy
@@ -20,8 +20,16 @@ This repository provides a Heroku worker wrapper that builds Moltbot from Git so
 heroku ps:scale web=0 worker=1
 ```
 
+## Environment Variables
+
+- `TELEGRAM_BOT_TOKEN` (required): Telegram bot token from BotFather.
+- `OPENAI_API_KEY` (required): OpenAI API key.
+- `MODEL` (optional): OpenAI model name (defaults to `gpt-4o-mini`).
+- `GROUP_REQUIRE_MENTION` (optional): Set `true` to require @mention in groups.
+- `LOG_LEVEL` (optional): Logging level for Moltbot (`info`, `debug`, `warn`, `error`).
+
 ## Notes
 
-- The build step installs pnpm, clones the official Moltbot repo, and runs `pnpm build`.
-- `start.sh` generates `/tmp/moltbot.json` and launches the gateway from the compiled `dist` entry.
-- Group replies are mention-gated by default via `GROUP_REQUIRE_MENTION=true`.
+- `start.sh` enables Corepack, validates required variables, writes `/tmp/moltbot.json`, and runs:
+  `pnpm dlx moltbot gateway --config /tmp/moltbot.json --verbose`.
+- Moltbot uses Telegram long polling mode by default in this gateway.
