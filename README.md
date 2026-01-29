@@ -13,7 +13,7 @@ This is a Heroku worker wrapper for the Moltbot (formerly Clawdbot) gateway usin
 1. Fork or clone this repository.
 2. Create a Heroku app.
 3. Set the required Config Vars (below).
-4. Deploy with the Heroku Node.js buildpack and scale the worker dyno.
+4. Deploy with the Heroku Node.js buildpack and scale the worker dyno (Python buildpack is recommended so `python3` is available for config generation).
 
 ## Required Config Vars
 
@@ -58,4 +58,5 @@ By default, `GROUP_REQUIRE_MENTION=true` so the bot only responds in groups when
 
 - Check logs with `heroku logs --tail`.
 - Ensure Node.js >= 22 (as specified in `package.json`).
+- If you see `python3` missing errors, add the Heroku Python buildpack before Node.js so the startup script can generate the config file.
 - If the bot doesn’t respond in groups, check Telegram privacy mode and confirm the bot has access to messages.
