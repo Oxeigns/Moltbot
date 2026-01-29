@@ -1,11 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
-echo "=== Moltbot/Clawdbot starting ==="
+echo "=== Starting Moltbot/Clawdbot Gateway ==="
 
-# -------------------------
-# REQUIRED ENV VARS
-# -------------------------
+# REQUIRED ENV
 : "${TELEGRAM_BOT_TOKEN:?Missing TELEGRAM_BOT_TOKEN}"
 : "${OPENAI_API_KEY:?Missing OPENAI_API_KEY}"
 MODEL="${MODEL:-gpt-4o-mini}"
@@ -13,19 +11,15 @@ MODEL="${MODEL:-gpt-4o-mini}"
 export NODE_ENV=production
 export TERM=dumb
 
-# -------------------------
-# PATCH CLIPBOARD (HEROKU)
-# -------------------------
+# PATCH: disable clipboard native crash on Heroku
 CLIP_PATH="node_modules/@mariozechner/clipboard/index.js"
 if [ -f "$CLIP_PATH" ]; then
   echo "module.exports = { writeSync(){}, readSync(){ return '' } }" > "$CLIP_PATH"
   echo "Clipboard module patched"
 fi
 
-# -------------------------
-# WRITE CONFIG (NO ${...} PLACEHOLDERS)
-# -------------------------
-CFG="/tmp/clawdbot.json"
+# IMPORTANT: write config to the path clawdbot expects
+CFG="/tmp/moltbot.json"
 cat > "$CFG" <<EOF
 {
   "gateway": { "mode": "local" },
@@ -52,22 +46,18 @@ cat > "$CFG" <<EOF
 EOF
 echo "Config written: $CFG"
 
-# -------------------------
-# RUN (NO --config FLAG)
-# -------------------------
+# Force config path (different versions read different env names)
+export MOLT_CONFIG_PATH="$CFG"
+export MOLTBOT_CONFIG="$CFG"
+export CLAWDBOT_CONFIG="$CFG"
+
 APP_ROOT="$(pwd)"
+BIN="$APP_ROOT/node_modules/.bin/clawdbot"
+
 cd /tmp
 
-BIN="$APP_ROOT/node_modules/.bin/clawdbot"
-if [ ! -x "$BIN" ]; then
-  echo "ERROR: clawdbot binary not found at $BIN"
-  exit 1
-fi
+# Try doctor auto-fix (ignore if unsupported)
+"$BIN" doctor --fix >/dev/null 2>&1 || true
 
-echo "Starting gateway..."
-if CLAWDBOT_CONFIG="$CFG" "$BIN" gateway run --allow-unconfigured 2>&1 | tee /tmp/clawdbot.log; then
-  exit 0
-else
-  echo "Flag --allow-unconfigured not supported or failed, retrying without it..."
-  CLAWDBOT_CONFIG="$CFG" "$BIN" gateway run
-fi
+# Start gateway (no --config, no unsupported flags)
+"$BIN" gateway run
