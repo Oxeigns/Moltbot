@@ -1,6 +1,6 @@
 {
   "name": "moltbot-heroku-wrapper",
-  "description": "Heroku worker-only wrapper for Moltbot built from source.",
+  "description": "Heroku worker-only wrapper for Moltbot using pnpm dlx.",
   "keywords": [
     "moltbot",
     "telegram",
