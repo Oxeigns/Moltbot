@@ -32,5 +32,14 @@ JSON
 
 mkdir -p /tmp/moltbot-workspace
 
-moltbot --version
-moltbot gateway --config /tmp/moltbot.json --verbose
+if command -v moltbot >/dev/null 2>&1; then
+  MOLT_CMD="moltbot"
+elif [[ -x "./node_modules/.bin/moltbot" ]]; then
+  MOLT_CMD="./node_modules/.bin/moltbot"
+else
+  echo "moltbot executable not found. Ensure dependencies are installed." >&2
+  exit 1
+fi
+
+"${MOLT_CMD}" --version
+"${MOLT_CMD}" gateway --config /tmp/moltbot.json --verbose
