@@ -27,4 +27,4 @@ cp "$CONFIG_SOURCE" "$CONFIG_PATH"
 # ---- Start Gateway ----
 APP_ROOT="$(pwd)"
 cd /tmp
-"$APP_ROOT/node_modules/.bin/clawdbot" gateway run --config "$CONFIG_PATH"
+"$APP_ROOT/node_modules/.bin/clawdbot" gateway run
