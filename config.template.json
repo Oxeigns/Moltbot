@@ -1,4 +1,6 @@
 {
+  "gateway": { "mode": "local" },
+
   "providers": {
     "openai": {
       "apiKey": "${OPENAI_API_KEY}",
