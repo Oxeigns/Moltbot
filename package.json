@@ -7,7 +7,10 @@
   },
   "packageManager": "pnpm@10.0.0",
   "pnpm": {
-    "onlyBuiltDependencies": []
+    "onlyBuiltDependencies": [],
+    "overrides": {
+      "@mariozechner/clipboard": "0.0.0"
+    }
   },
   "scripts": {
     "heroku-prebuild": "corepack enable",
