@@ -1,21 +1,11 @@
 {
-  "name": "moltbot-heroku",
-  "description": "Heroku worker wrapper for Moltbot (formerly Clawdbot) using Telegram long polling.",
+  "name": "moltbot-heroku-wrapper",
+  "description": "Heroku worker-only wrapper for Moltbot using global CLI install.",
   "keywords": [
     "moltbot",
-    "clawdbot",
     "telegram",
-    "ai",
     "heroku",
     "worker"
-  ],
-  "buildpacks": [
-    {
-      "url": "heroku/python"
-    },
-    {
-      "url": "heroku/nodejs"
-    }
   ],
   "env": {
     "TELEGRAM_BOT_TOKEN": {
@@ -27,47 +17,19 @@
       "required": true
     },
     "MODEL": {
-      "description": "Default OpenAI model to use.",
+      "description": "OpenAI model to use.",
       "required": false,
       "value": "gpt-4o-mini"
-    },
-    "LOG_LEVEL": {
-      "description": "Logging level passed to Moltbot (info, debug, warn, error).",
-      "required": false,
-      "value": "info"
     },
     "GROUP_REQUIRE_MENTION": {
       "description": "Require @mention in groups before Moltbot responds.",
       "required": false,
       "value": "true"
     },
-    "MOLT_CONFIG_PATH": {
-      "description": "Path to generated Moltbot config JSON.",
+    "LOG_LEVEL": {
+      "description": "Logging level passed to Moltbot (info, debug, warn, error).",
       "required": false,
-      "value": "/tmp/moltbot.json"
-    },
-    "ALLOWED_USER_IDS": {
-      "description": "Optional comma-separated Telegram user IDs allowed to pair or DM.",
-      "required": false
-    },
-    "ALLOWED_GROUP_IDS": {
-      "description": "Optional comma-separated Telegram group chat IDs allowed to use the bot.",
-      "required": false
-    },
-    "WORKSPACE_PATH": {
-      "description": "Workspace directory (must be under /tmp for Heroku).",
-      "required": false,
-      "value": "/tmp/moltbot-workspace"
-    },
-    "DISABLE_DANGEROUS_TOOLS": {
-      "description": "Disable dangerous tools and skills by default.",
-      "required": false,
-      "value": "true"
-    }
-  },
-  "formation": {
-    "worker": {
-      "quantity": 1
+      "value": "info"
     }
   }
 }
