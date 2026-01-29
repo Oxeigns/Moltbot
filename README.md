@@ -37,6 +37,6 @@ heroku ps:scale web=0 worker=1
 ## Notes
 
 - Build-time install: `pnpm add clawdbot@latest` runs during `heroku-postbuild`.
-- Runtime: `start.sh` only writes `/tmp/moltbot.json` and starts the gateway with the local binary.
+- Runtime: `start.sh` writes `/tmp/moltbot.json` and starts the gateway with the local binary using that config.
 - Telegram uses long polling in this gateway configuration.
 - Workspace is `/tmp` to keep runtime storage memory-light on Heroku.
