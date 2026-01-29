@@ -15,5 +15,14 @@ fi
 export NODE_ENV=production
 export TERM=dumb
 
+# ---- Config ----
+CONFIG_SOURCE="moltbot.json"
+if [ ! -f "$CONFIG_SOURCE" ]; then
+  CONFIG_SOURCE="config.template.json"
+fi
+
+CONFIG_PATH="/tmp/moltbot.json"
+cp "$CONFIG_SOURCE" "$CONFIG_PATH"
+
 # ---- Start Gateway (no unsupported flags) ----
-./node_modules/.bin/clawdbot gateway run
+./node_modules/.bin/clawdbot gateway run --config "$CONFIG_PATH"
