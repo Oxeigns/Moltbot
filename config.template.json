@@ -1,0 +1,21 @@
+{
+  "agent": {
+    "workspace": "/tmp/moltbot-workspace",
+    "disableDangerousTools": true
+  },
+  "providers": {
+    "openai": {
+      "apiKey": "${OPENAI_API_KEY}",
+      "model": "gpt-4o-mini"
+    }
+  },
+  "channels": {
+    "telegram": {
+      "botToken": "${TELEGRAM_BOT_TOKEN}",
+      "dmPolicy": "pairing",
+      "requireMention": true
+    }
+  }
+  // How to enable tools locally (NOT recommended on Heroku):
+  // See Moltbot docs for tool configuration options.
+}
