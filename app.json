@@ -9,6 +9,14 @@
     "heroku",
     "worker"
   ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    },
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
   "env": {
     "TELEGRAM_BOT_TOKEN": {
       "description": "Telegram bot token from BotFather.",
