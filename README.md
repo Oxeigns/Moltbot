@@ -1,3 +1,9 @@
+## 🚀 Deploy Moltbot on Heroku
+
+Click the button below to deploy Moltbot instantly on Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Oxeigns/Moltbot)
+
 # Moltbot on Heroku (Telegram Worker)
 
 This is a Heroku worker wrapper for the Moltbot (formerly Clawdbot) gateway using Telegram long polling. It runs as a worker dyno and is configured for safe defaults in DMs and groups.
