@@ -16,7 +16,17 @@ export ALLOWED_GROUP_IDS="${ALLOWED_GROUP_IDS:-}"
 mkdir -p "$WORKSPACE_PATH"
 mkdir -p "$(dirname "$MOLT_CONFIG_PATH")"
 
-python - <<'PY'
+PYTHON_CMD=""
+if command -v python3 >/dev/null 2>&1; then
+  PYTHON_CMD="python3"
+elif command -v python >/dev/null 2>&1; then
+  PYTHON_CMD="python"
+else
+  echo "Error: python3 is required but was not found in PATH." >&2
+  exit 127
+fi
+
+$PYTHON_CMD - <<'PY'
 import json
 import os
 import sys
