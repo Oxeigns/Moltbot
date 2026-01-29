@@ -24,5 +24,7 @@ fi
 CONFIG_PATH="/tmp/moltbot.json"
 cp "$CONFIG_SOURCE" "$CONFIG_PATH"
 
-# ---- Start Gateway (no unsupported flags) ----
-./node_modules/.bin/clawdbot gateway run --config "$CONFIG_PATH"
+# ---- Start Gateway (use default config discovery) ----
+APP_ROOT="$(pwd)"
+cd /tmp
+"$APP_ROOT/node_modules/.bin/clawdbot" gateway run
