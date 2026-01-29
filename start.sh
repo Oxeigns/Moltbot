@@ -140,21 +140,10 @@ fs.writeFileSync(process.env.MOLT_CONFIG_PATH, `${JSON.stringify(config, null, 2
 JS
 fi
 
-bash scripts/build-moltbot.sh
-
 echo "Starting Moltbot Gateway (Telegram long polling)..."
 echo "Config: $MOLT_CONFIG_PATH"
 echo "Workspace: $WORKSPACE_PATH"
 echo "Log level: $LOG_LEVEL"
 
-CLI=""
-if [ -x "node_modules/.bin/moltbot" ]; then
-  CLI="node_modules/.bin/moltbot"
-elif [ -x "node_modules/.bin/clawdbot" ]; then
-  CLI="node_modules/.bin/clawdbot"
-else
-  CLI="npx moltbot"
-fi
-
 export LOG_LEVEL
-exec $CLI gateway start --config "$MOLT_CONFIG_PATH"
+exec pnpm moltbot gateway start --config "$MOLT_CONFIG_PATH"
