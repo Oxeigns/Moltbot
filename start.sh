@@ -8,8 +8,6 @@ export NODE_OPTIONS="--max-old-space-size=256"
 
 MODEL="${MODEL:-gpt-4o-mini}"
 
-mkdir -p /tmp/moltbot-workspace
-
 cat <<JSON > /tmp/moltbot.json
 {
   "providers": {
@@ -30,13 +28,13 @@ cat <<JSON > /tmp/moltbot.json
   },
   "logLevel": "info",
   "agent": {
-    "workspace": "/tmp/moltbot-workspace"
+    "workspace": "/tmp"
   }
 }
 JSON
 
 echo "Starting Moltbot Telegram Gateway (long polling)"
-echo "Workspace: /tmp/moltbot-workspace"
+echo "Workspace: /tmp"
 echo "Config: /tmp/moltbot.json"
 
 ./node_modules/.bin/clawdbot gateway run \
