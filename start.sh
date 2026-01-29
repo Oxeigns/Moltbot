@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-export CLI_DISABLE_UI=1
 export NO_CLIPBOARD=1
+export CLI_DISABLE_UI=1
+export DISABLE_UI=1
 export TERM=dumb
 export NODE_ENV=production
 
 set -euo pipefail
 
 export CLIPBOARD_DISABLE=1
-export DISABLE_UI=1
 
 export NODE_OPTIONS="--max-old-space-size=256"
 
@@ -49,5 +49,5 @@ echo "Config: /tmp/moltbot.json"
   --config /tmp/moltbot.json \
   --allow-unconfigured \
   --no-ui \
-  --log-level info \
-  --headless
+  --headless \
+  --log-level info
