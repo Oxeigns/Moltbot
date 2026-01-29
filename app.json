@@ -1,7 +1,8 @@
 {
   "name": "moltbot-heroku-wrapper",
-  "description": "Heroku worker-only wrapper for Moltbot using pnpm dlx.",
+  "description": "Heroku worker-only wrapper for Clawdbot using pnpm dlx.",
   "keywords": [
+    "clawdbot",
     "moltbot",
     "telegram",
     "heroku",
@@ -20,13 +21,8 @@
       "description": "OpenAI model to use.",
       "required": false
     },
-    "GROUP_REQUIRE_MENTION": {
-      "description": "Require @mention in groups before Moltbot responds.",
-      "required": false,
-      "value": "true"
-    },
     "LOG_LEVEL": {
-      "description": "Logging level passed to Moltbot (info, debug, warn, error).",
+      "description": "Logging level passed to the gateway (info, debug, warn, error).",
       "required": false
     }
   },

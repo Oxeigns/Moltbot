@@ -10,8 +10,9 @@ pnpm -v
 : "${OPENAI_API_KEY:?OPENAI_API_KEY is required}"
 
 MODEL="${MODEL:-gpt-4o-mini}"
-GROUP_REQUIRE_MENTION="${GROUP_REQUIRE_MENTION:-true}"
 LOG_LEVEL="${LOG_LEVEL:-info}"
+
+mkdir -p /tmp/moltbot-workspace
 
 cat <<JSON > /tmp/moltbot.json
 {
@@ -23,9 +24,12 @@ cat <<JSON > /tmp/moltbot.json
   },
   "channels": {
     "telegram": {
+      "enabled": true,
       "botToken": "${TELEGRAM_BOT_TOKEN}",
       "dmPolicy": "pairing",
-      "requireMention": ${GROUP_REQUIRE_MENTION}
+      "groups": {
+        "requireMention": true
+      }
     }
   },
   "logLevel": "${LOG_LEVEL}",
@@ -35,10 +39,11 @@ cat <<JSON > /tmp/moltbot.json
 }
 JSON
 
-mkdir -p /tmp/moltbot-workspace
-
 echo "Starting Moltbot Telegram Gateway (long polling)"
 echo "Workspace: /tmp/moltbot-workspace"
 echo "Config: /tmp/moltbot.json"
 
-pnpm dlx moltbot gateway --config /tmp/moltbot.json --verbose
+pnpm dlx clawdbot@latest gateway run \
+  --config /tmp/moltbot.json \
+  --allow-unconfigured \
+  --verbose
