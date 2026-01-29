@@ -17,6 +17,6 @@
   },
   "logLevel": "info",
   "agent": {
-    "workspace": "/tmp/moltbot-workspace"
+    "workspace": "/tmp"
   }
 }
